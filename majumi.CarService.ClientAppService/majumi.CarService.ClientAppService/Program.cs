@@ -41,7 +41,6 @@ namespace majumi.CarService.ClientAppService {
 
             app.MapControllers();
 
-
             app.Run();
         }
     }

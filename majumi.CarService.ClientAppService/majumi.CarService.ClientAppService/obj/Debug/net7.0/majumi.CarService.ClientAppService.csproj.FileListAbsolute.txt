@@ -36,3 +36,4 @@ C:\Users\Juri\Desktop\UAIM\clientappservice\majumi.CarService.ClientAppService\m
 C:\Users\Juri\Desktop\UAIM\clientappservice\majumi.CarService.ClientAppService\majumi.CarService.ClientAppService\obj\Debug\net7.0\majumi.CarService.ClientAppService.csproj.CopyComplete
 C:\Users\Juri\Desktop\UAIM\clientappservice\majumi.CarService.ClientAppService\majumi.CarService.ClientAppService\bin\Debug\net7.0\Swashbuckle.AspNetCore.SwaggerUI.dll
 C:\Users\Juri\Desktop\UAIM\clientappservice\majumi.CarService.ClientAppService\majumi.CarService.ClientAppService\bin\Debug\net7.0\Newtonsoft.Json.dll
+C:\Users\Juri\Desktop\UAIM\clientappservice\majumi.CarService.ClientAppService\majumi.CarService.ClientAppService\bin\Debug\net7.0\mechanics.json

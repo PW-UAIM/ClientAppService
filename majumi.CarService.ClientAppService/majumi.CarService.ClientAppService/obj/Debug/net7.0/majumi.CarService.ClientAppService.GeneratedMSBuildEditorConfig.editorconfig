@@ -16,12 +16,20 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = C:\Users\Juri\Desktop\UAIM\clientappservice\majumi.CarService.ClientAppService\majumi.CarService.ClientAppService
 build_property._RazorSourceGeneratorDebug = 
 
-[C:/Users/Juri/Desktop/UAIM/clientappservice/majumi.CarService.ClientAppService/majumi.CarService.ClientAppService/Views/Home/GetVisits.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxHZXRWaXNpdHMuY3NodG1s
+[C:/Users/Juri/Desktop/UAIM/clientappservice/majumi.CarService.ClientAppService/majumi.CarService.ClientAppService/Views/Client/GetAvailableDates.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50XEdldEF2YWlsYWJsZURhdGVzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Juri/Desktop/UAIM/clientappservice/majumi.CarService.ClientAppService/majumi.CarService.ClientAppService/Views/Home/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
+[C:/Users/Juri/Desktop/UAIM/clientappservice/majumi.CarService.ClientAppService/majumi.CarService.ClientAppService/Views/Client/GetVisits.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50XEdldFZpc2l0cy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Juri/Desktop/UAIM/clientappservice/majumi.CarService.ClientAppService/majumi.CarService.ClientAppService/Views/Client/Login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50XExvZ2luLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Juri/Desktop/UAIM/clientappservice/majumi.CarService.ClientAppService/majumi.CarService.ClientAppService/Views/Client/MakeAnAppointment.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50XE1ha2VBbkFwcG9pbnRtZW50LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Juri/Desktop/UAIM/clientappservice/majumi.CarService.ClientAppService/majumi.CarService.ClientAppService/Views/Shared/Error.cshtml]
