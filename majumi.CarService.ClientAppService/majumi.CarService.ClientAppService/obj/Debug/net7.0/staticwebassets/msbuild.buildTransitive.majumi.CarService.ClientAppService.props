@@ -1,3 +1,0 @@
-﻿<Project>
-  <Import Project="..\buildMultiTargeting\majumi.CarService.ClientAppService.props" />
-</Project>

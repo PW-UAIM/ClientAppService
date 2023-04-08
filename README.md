@@ -1,4 +1,4 @@
-# ClientAppService
+# MechanicAppService
 
 
 
@@ -15,14 +15,14 @@ Already a pro? Just edit this README.md and make it your own. Want to make it ea
 
 ```
 cd existing_repo
-git remote add origin https://gitlab-stud.elka.pw.edu.pl/uaim1/appservice/clientappservice.git
+git remote add origin https://gitlab-stud.elka.pw.edu.pl/uaim1/appservice/mechanicappservice.git
 git branch -M main
 git push -uf origin main
 ```
 
 ## Integrate with your tools
 
-- [ ] [Set up project integrations](https://gitlab-stud.elka.pw.edu.pl/uaim1/appservice/clientappservice/-/settings/integrations)
+- [ ] [Set up project integrations](https://gitlab-stud.elka.pw.edu.pl/uaim1/appservice/mechanicappservice/-/settings/integrations)
 
 ## Collaborate with your team
 
