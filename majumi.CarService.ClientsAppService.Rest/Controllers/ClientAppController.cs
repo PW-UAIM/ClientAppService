@@ -7,44 +7,44 @@ namespace majumi.CarService.ClientsAppService.Rest.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class MechanicAppController : ControllerBase
+public class ClientAppController : ControllerBase
 {
-    private readonly ILogger<MechanicAppController> _logger;
+    private readonly ILogger<ClientAppController> _logger;
 
-    private MechanicRESTClient client;
-    public MechanicAppController(ILogger<MechanicAppController> logger)
+    private ClientRESTClient restClient;
+    public ClientAppController(ILogger<ClientAppController> logger)
     {
         _logger = logger;
-        client = new MechanicRESTClient();
+        restClient = new ClientRESTClient();
     }
 
     [HttpGet]
-    [Route("/mechanicLogIn/{id:int}")]
-    public MechanicLoginStatus MechanicLogIn(int id)
+    [Route("/clientLogIn/{id:int}")]
+    public ClientLoginStatus ClientLogIn(int id)
     {
-        var mechanic = client.MechanicLogIn(id);
-        return new MechanicLoginStatus(mechanic != null, mechanic.Result.MechanicID);
+        var client = restClient.ClientLogIn(id);
+        return new ClientLoginStatus(client != null, client.Result.ClientID);
     }
 
     [HttpGet]
     [Route("/getCar/{id:int}")]
     public Car GetCar(int id)
     {
-        return client.GetCar(id).Result;
+        return restClient.GetCar(id).Result;
     }
 
     [HttpGet]
     [Route("/getVisit/{id:int}")]
     public Visit GetVisit(int id)
     {
-        return client.GetVisit(id).Result;
+        return restClient.GetVisit(id).Result;
     }
 
     [HttpGet]
     [Route("/getVisitsAt/{month:int}/{day:int}")]
     public Visit[] GetVisitsAt(int month, int day)
     {
-        return client.GetVisitsAt(month, day).Result;
+        return restClient.GetVisitsAt(month, day).Result;
     }
 
     [HttpGet]

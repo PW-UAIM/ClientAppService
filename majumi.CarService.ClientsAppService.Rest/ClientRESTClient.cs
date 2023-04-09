@@ -3,34 +3,34 @@ using System.Text.Json;
 
 namespace majumi.CarService.ClientsAppService.Rest;
 
-public class MechanicRESTClient
+public class ClientRESTClient
 {
-    private const string MechanicDataServiceURL = "http://localhost:5001/";
+    private const string ClientDataServiceURL = "http://localhost:5001/";
     private const string CarDataServiceURL = null;
     private const string VisitDataServiceURL = null;
 
-    public MechanicRESTClient()
+    public ClientRESTClient()
     {
-        if (MechanicDataServiceURL == null || CarDataServiceURL == null || VisitDataServiceURL == null)
+        if (ClientDataServiceURL == null || CarDataServiceURL == null || VisitDataServiceURL == null)
             throw new NotImplementedException();
         // Leave empty constructor after implementation
     }
 
-    public async Task<Mechanic> MechanicLogIn(int id)
+    public async Task<Client> ClientLogIn(int id)
     {
-        Mechanic mechanic;
+        Client client;
 
-        using (var client = new HttpClient())
+        using (var httpclient = new HttpClient())
         {
-            client.BaseAddress = new Uri(MechanicDataServiceURL);
+            httpclient.BaseAddress = new Uri(ClientDataServiceURL);
 
-            var result = await client.GetAsync($"mechanic/{id}");
+            var result = await httpclient.GetAsync($"client/{id}");
 
             string resultContent = await result.Content.ReadAsStringAsync();
 
             try
             {
-                mechanic = JsonSerializer.Deserialize<Mechanic>(resultContent);
+                client = JsonSerializer.Deserialize<Client>(resultContent);
             }
             catch (Exception e)
             {
@@ -39,7 +39,7 @@ public class MechanicRESTClient
             }
         }
 
-        return mechanic;
+        return client;
     }
     public async Task<Car> GetCar(int id)
     {
