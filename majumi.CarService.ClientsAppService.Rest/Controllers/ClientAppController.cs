@@ -19,6 +19,60 @@ public class ClientAppController : ControllerBase
     }
 
     [HttpGet]
+    [Route("/client/{id:int}/login")]
+    public ClientLoginStatus ClientLogIn(int id)
+    {
+        return restClient.ClientLogIn(id).Result;
+    }
+
+    [HttpPost]
+    [Route("/car/add")]
+    public ActionResult AddCar(CarData data)
+    {
+        if (restClient.AddCar(data).Result)
+            return Created("/car/add", data);
+        return BadRequest();
+    }
+
+    [HttpPost]
+    [Route("/visit/add")]
+    public ActionResult AddVisit(VisitData data)
+    {
+        if (restClient.AddVisit(data).Result)
+            return Created("/car/add", data);
+        return BadRequest();
+    }
+
+    [HttpGet]
+    [Route("/car/all/{id:int}")]
+    public Car[] GetClientCars(int id)
+    {
+        return restClient.GetClientCars(id).Result;
+    }
+
+    [HttpGet]
+    [Route("/visit/all/{id:int}")]
+    public Visit[] GetClientVisits(int id)
+    {
+        return restClient.GetClientVisits(id).Result;
+    }
+
+    [HttpGet]
+    [Route("/car/{id:int}")]
+    public Car GetCar(int id)
+    {
+        return restClient.GetCar(id).Result;
+    }
+
+    [HttpGet]
+    [Route("/visit/{id:int}")]
+    public Visit GetVisit(int id)
+    {
+        return restClient.GetVisit(id).Result;
+    }
+
+    /*
+    [HttpGet]
     [Route("/clientLogIn/{id:int}")]
     public ClientLoginStatus ClientLogIn(int id)
     {
@@ -46,6 +100,7 @@ public class ClientAppController : ControllerBase
     {
         return restClient.GetVisitsAt(month, day).Result;
     }
+    */
 
     [HttpGet]
     [Route("/runTests")]

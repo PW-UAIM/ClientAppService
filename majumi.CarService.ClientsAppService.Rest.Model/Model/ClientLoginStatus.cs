@@ -1,17 +1,16 @@
-﻿namespace majumi.CarService.ClientsAppService.Rest.Model.Model;
+﻿using majumi.CarService.ClientsAppService.Model;
+
+namespace majumi.CarService.ClientsAppService.Rest.Model.Model;
 
 public class ClientLoginStatus
 {
-    public bool IsLoggedIn { get; set; }
-    public int? ClientID { get; set; }
+    public bool IsSuccesfull { get; set; }
+    public Client? Client { get; set; }
 
-    public ClientLoginStatus(bool isLoggedIn, int? clientID)
+    public ClientLoginStatus() { }
+    public ClientLoginStatus(bool isSuccesfull, Client? client)
     {
-        IsLoggedIn = isLoggedIn;
-        ClientID = clientID;
-    }
-
-    public ClientLoginStatus()
-    {
+        IsSuccesfull = isSuccesfull;
+        Client = client;
     }
 }
