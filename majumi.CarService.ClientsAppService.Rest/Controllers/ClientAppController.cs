@@ -39,7 +39,7 @@ public class ClientAppController : ControllerBase
     public ActionResult AddVisit(VisitData data)
     {
         if (restClient.AddVisit(data).Result)
-            return Created("/car/add", data);
+            return Created("/visit/add", data);
         return BadRequest();
     }
 
