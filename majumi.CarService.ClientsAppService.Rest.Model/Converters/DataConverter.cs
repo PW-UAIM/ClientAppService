@@ -28,18 +28,27 @@ public static class DataConverter
             Make = car.Make,
             Model = car.Model,
             Year = car.Year,
-            Color = car.Color,
             Mileage = car.Mileage,
-            Transmission = car.Transmission,
-            FuelType = car.FuelType,
             EngineSize = car.EngineSize,
-            Horsepower = car.Horsepower,
-            Torque = car.Torque,
-            Drivetrain = car.Drivetrain,
-            SeatingCapacity = car.SeatingCapacity,
-            VehicleType = car.VehicleType,
-            Price = car.Price,
-            Location = car.Location
+            VIN = car.VIN,
+            LicensePlate = car.LicensePlate,
+            ClientID = car.ClientID
+        };
+    }
+
+    public static Car ConvertToCar(this CarData car)
+    {
+        return new Car
+        {
+            CarID = car.CarID,
+            Make = car.Make,
+            Model = car.Model,
+            Year = car.Year,
+            Mileage = car.Mileage,
+            EngineSize = car.EngineSize,
+            VIN = car.VIN,
+            LicensePlate = car.LicensePlate,
+            ClientID = car.ClientID
         };
     }
 
@@ -51,12 +60,25 @@ public static class DataConverter
             ClientID = visit.ClientID,
             ServiceType = visit.ServiceType,
             ServiceDate = visit.ServiceDate,
-            ServiceTime = visit.ServiceTime,
-            ServiceLocation = visit.ServiceLocation,
-            ServiceCost  = visit.ServiceCost,
+            ServiceCost = visit.ServiceCost,
             ServiceStatus = visit.ServiceStatus,
             Notes = visit.Notes,
-            Rating = visit.Rating,
+            MechanicID = visit.MechanicID,
+            CarID = visit.CarID
+        };
+    }
+
+    public static Visit ConvertToVisit(this VisitData visit)
+    {
+        return new Visit
+        {
+            VisitID = visit.VisitID,
+            ClientID = visit.ClientID,
+            ServiceType = visit.ServiceType,
+            ServiceDate = visit.ServiceDate,
+            ServiceCost = visit.ServiceCost,
+            ServiceStatus = visit.ServiceStatus,
+            Notes = visit.Notes,
             MechanicID = visit.MechanicID,
             CarID = visit.CarID
         };

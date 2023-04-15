@@ -1,5 +1,5 @@
 echo off
-set url=http://localhost:5010
+set url=https://localhost:5010
 
 CALL:curl_test "Poprawne logowanie" GET /client/1/login
 
@@ -37,7 +37,7 @@ CALL:curl_test "Dodawanie wizyty" POST /visit/add -d '{^
   "rating": 0,^
   "mechanicID": 0,^
   "carID": 0^
-}
+}'
 
 CALL:curl_test "Wszystkie samochody klienta o ID = 1" GET /car/all/1
 
@@ -45,13 +45,16 @@ CALL:curl_test "Wszystkie wizyty klienta o ID = 1" GET /visit/all/1
 
 CALL:curl_test "Wizyta o ID 1" GET /visit/1
 
-CALL:curl_test "Samochód o ID 1" GET /car/1
+CALL:curl_test "Samochod o ID 1" GET /car/1
+
+EXIT /B 0
 
 :curl_test
 echo Nazwa testu: %~1
 echo Testowany url: %url%%~3
-curl -X '%~2' ^
+curl -X %~2 ^
 	 %url%%~3 ^
-	 -H 'accept: text/plain'
+	 -H 'accept:application/json'
+echo:
 echo:
 EXIT /B 0

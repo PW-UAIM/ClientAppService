@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
 using majumi.CarService.ClientsAppService.Model;
-using majumi.CarService.ClientsAppService.Rest;
 using majumi.CarService.ClientsAppService.Rest.Model.Model;
 
 namespace majumi.CarService.ClientsAppService.Rest.Controllers;

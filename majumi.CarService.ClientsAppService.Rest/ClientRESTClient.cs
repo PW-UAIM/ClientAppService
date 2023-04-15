@@ -1,6 +1,6 @@
 ﻿using majumi.CarService.ClientsAppService.Model;
+using majumi.CarService.ClientsAppService.Rest.Model.Converters;
 using majumi.CarService.ClientsAppService.Rest.Model.Model;
-using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 
@@ -8,16 +8,17 @@ namespace majumi.CarService.ClientsAppService.Rest;
 
 public class ClientRESTClient
 {
-    private const string ClientDataServiceURL = "http://localhost:5001/";
-    private const string CarDataServiceURL = "http://localhost:5000/";
-    private const string VisitDataServiceURL = "http://localhost:5003/";
-
-    public ClientRESTClient()
+    private const string ClientDataServiceURL = "https://localhost:5001/";
+    private const string CarDataServiceURL = "https://localhost:5000/";
+    private const string VisitDataServiceURL = "https://localhost:5003/";
+    private JsonSerializerOptions options = new JsonSerializerOptions
     {
-        if (ClientDataServiceURL == null || CarDataServiceURL == null || VisitDataServiceURL == null)
-            throw new NotImplementedException();
-        // Leave empty constructor after implementation
-    }
+        PropertyNameCaseInsensitive = true,
+        WriteIndented = true,
+        
+    };
+
+    public ClientRESTClient() { }
 
     public async Task<bool> AddCar(CarData data)
     {
@@ -59,7 +60,7 @@ public class ClientRESTClient
 
             try
             {
-                client = JsonSerializer.Deserialize<Client>(resultContent);
+                client = JsonSerializer.Deserialize<Client>(resultContent, options);
             }
             catch (Exception e)
             {
@@ -73,7 +74,7 @@ public class ClientRESTClient
 
     public async Task<Car[]> GetClientCars(int id)
     {
-        Car[] car;
+        var car = new List<Car>();
 
         using (var httpClient = new HttpClient())
         {
@@ -83,7 +84,11 @@ public class ClientRESTClient
 
             try
             {
-                car = JsonSerializer.Deserialize<Car[]>(resultContent);
+                CarData[] carData = JsonSerializer.Deserialize<CarData[]>(resultContent, options);
+                foreach (CarData c in carData)
+                {
+                    car.Add(DataConverter.ConvertToCar(c));
+                }
             }
             catch (Exception e)
             {
@@ -91,22 +96,26 @@ public class ClientRESTClient
                 return null;
             }
         }
-        return car;
+        return car.ToArray();
     }
 
     public async Task<Visit[]> GetClientVisits(int id)
     {
-        Visit[] visit;
+        var visit = new List<Visit>();
 
         using (var httpClient = new HttpClient())
         {
             httpClient.BaseAddress = new Uri(VisitDataServiceURL);
-            var result = await httpClient.GetAsync($"visit/all/client/{id}");
+            var result = await httpClient.GetAsync($"visit/client/{id}");
             string resultContent = await result.Content.ReadAsStringAsync();
 
             try
             {
-                visit = JsonSerializer.Deserialize<Visit[]>(resultContent);
+                VisitData[] visitData = JsonSerializer.Deserialize<VisitData[]>(resultContent, options);
+                foreach (VisitData v in visitData)
+                {
+                    visit.Add(DataConverter.ConvertToVisit(v));
+                }
             }
             catch (Exception e)
             {
@@ -114,7 +123,7 @@ public class ClientRESTClient
                 return null;
             }
         }
-        return visit;
+        return visit.ToArray();
     }
 
     public async Task<Car> GetCar(int id)
@@ -126,10 +135,11 @@ public class ClientRESTClient
             httpClient.BaseAddress = new Uri(CarDataServiceURL);
             var result = await httpClient.GetAsync($"car/{id}");
             string resultContent = await result.Content.ReadAsStringAsync();
-
+            Console.WriteLine(resultContent);
             try
             {
-                car = JsonSerializer.Deserialize<Car>(resultContent);
+                CarData c = JsonSerializer.Deserialize<CarData>(resultContent, options);
+                car = DataConverter.ConvertToCar(c);
             }
             catch (Exception e)
             {
@@ -152,7 +162,8 @@ public class ClientRESTClient
 
             try
             {
-                visit = JsonSerializer.Deserialize<Visit>(resultContent);
+                VisitData v = JsonSerializer.Deserialize<VisitData>(resultContent, options);
+                visit = DataConverter.ConvertToVisit(v);
             }
             catch (Exception e)
             {
@@ -162,41 +173,4 @@ public class ClientRESTClient
         }
         return visit;
     }
-
-    /*public async Task<Client> ClientLogIn(int id)
-    {
-        Client client;
-
-        using (var httpclient = new HttpClient())
-        {
-            httpclient.BaseAddress = new Uri(ClientDataServiceURL);
-
-            var result = await httpclient.GetAsync($"client/{id}");
-
-            string resultContent = await result.Content.ReadAsStringAsync();
-
-            try
-            {
-                client = JsonSerializer.Deserialize<Client>(resultContent);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-                return null;
-            }
-        }
-
-        return client;
-    }
-
-
-    public async Task<Visit[]> GetVisitsAt(int month, int day)
-    {
-        throw new NotImplementedException();
-    }
-    */
 }
-
-
-
-
