@@ -31,20 +31,20 @@ public class ClientAppController : ControllerBase
 
     [HttpPost]
     [Route("/car/add")]
-    public ActionResult<CarData> AddCar(CarData data)
+    public ActionResult<bool> AddCar(CarData data)
     {
         if (restClient.AddCar(data).Result)
-            return Created($"/car/{data.CarID}", data);
+            return Created($"/car/{data.CarID}", true);
 
         return BadRequest();
     }
 
     [HttpPost]
     [Route("/visit/add")]
-    public ActionResult<VisitData> AddVisit(VisitData data)
+    public ActionResult<bool> AddVisit(VisitData data)
     {
         if (restClient.AddVisit(data).Result)
-            return Created($"/visit/{data.VisitID}", data);
+            return Created($"/visit/{data.VisitID}", true);
 
         return BadRequest();
     }
