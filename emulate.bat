@@ -9,7 +9,7 @@ echo "Moze na nim dodac nowe auto"
 echo Testowany url: https://localhost:5010/car/add
 curl -X POST https://localhost:5010/car/add -H "Content-Type: application/json" -d ^
 "{^
-	\"CarID\": 20,^
+	\"CarID\": 12,^
 	\"Make\": \"Renault\",^
 	\"Model\": \"Megan\",^
 	\"Year\": 2020,^
@@ -17,25 +17,25 @@ curl -X POST https://localhost:5010/car/add -H "Content-Type: application/json" 
 	\"EngineSize\": \"3.5\",^
 	\"VIN\": \"YV4A22RK1M1234567\",^
 	\"LicensePlate\": \"PY21ZSL\",^
-	\"ClientID\": 6^
+	\"ClientID\": 1^
 }"
 echo:
-echo:gf
+echo:
 echo "Na panelu widzi takze swoje wizyty" 
 CALL:curl_test GET /visit/client/1
 echo "Moze tez sie zapisac na wizyte"
 echo Testowany url: https://localhost:5010/visit/add
 curl -X POST https://localhost:5010/visit/add -H "Content-Type: application/json" -d ^
 "{^
-  \"visitID\": 100,^
-  \"clientID\": 0,^
+  \"visitID\": 12,^
+  \"clientID\": 1,^
   \"serviceType\": \"string\",^
   \"serviceDate\": \"2023-04-14T15:48:11.742Z\",^
   \"serviceCost\": 0,^
   \"serviceStatus\": \"string\",^
   \"notes\": \"string\",^
   \"mechanicID\": 0,^
-  \"carID\": 0^
+  \"carID\": 12^
 }"
 echo:
 echo:

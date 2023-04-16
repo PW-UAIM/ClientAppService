@@ -37,10 +37,11 @@ curl -X POST https://localhost:5010/visit/add -H "Content-Type: application/json
   \"carID\": 0^
 }"
 
+echo:
+echo:
+CALL:curl_test "Wszystkie samochody klienta o ID = 1" GET /car/client/1
 
-CALL:curl_test "Wszystkie samochody klienta o ID = 1" GET /car/all/1
-
-CALL:curl_test "Wszystkie wizyty klienta o ID = 1" GET /visit/all/1
+CALL:curl_test "Wszystkie wizyty klienta o ID = 1" GET /visit/client/1
 
 CALL:curl_test "Wizyta o ID 1" GET /visit/1
 
