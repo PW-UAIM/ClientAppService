@@ -50,7 +50,7 @@ public class ClientAppController : ControllerBase
     }
 
     [HttpGet]
-    [Route("/car/all/{id:int}")]
+    [Route("/car/client/{id:int}")]
     public List<CarData> GetClientCars(int id)
     {
         List<Car> cars = restClient.GetClientCars(id).Result;
@@ -63,7 +63,7 @@ public class ClientAppController : ControllerBase
     }
 
     [HttpGet]
-    [Route("/visit/all/{id:int}")]
+    [Route("/visit/client/{id:int}")]
     public List<VisitData> GetClientVisits(int id)
     {
         List<Visit> visits = restClient.GetClientVisits(id).Result;
