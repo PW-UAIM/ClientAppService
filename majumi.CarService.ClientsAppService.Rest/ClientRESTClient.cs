@@ -57,7 +57,8 @@ public class ClientRESTClient
             httpClient.BaseAddress = new Uri(ClientDataServiceURL);
             var result = await httpClient.GetAsync($"client/{id}");
             string resultContent = await result.Content.ReadAsStringAsync();
-
+            if(!result.StatusCode.Equals(System.Net.HttpStatusCode.OK))
+                return new ClientLoginStatus(false, null);
             try
             {
                 client = JsonSerializer.Deserialize<Client>(resultContent, options);
@@ -68,11 +69,11 @@ public class ClientRESTClient
                 return new ClientLoginStatus(false, null);
             }
         }
-
-        return new ClientLoginStatus(true, client);
+        ClientData clientData = DataConverter.ConvertToClientData(client);
+        return new ClientLoginStatus(true, clientData);
     }
 
-    public async Task<Car[]> GetClientCars(int id)
+    public async Task<List<Car>> GetClientCars(int id)
     {
         var car = new List<Car>();
 
@@ -84,7 +85,7 @@ public class ClientRESTClient
 
             try
             {
-                CarData[] carData = JsonSerializer.Deserialize<CarData[]>(resultContent, options);
+                List<CarData> carData = JsonSerializer.Deserialize<CarData[]>(resultContent, options).ToList();
                 foreach (CarData c in carData)
                 {
                     car.Add(DataConverter.ConvertToCar(c));
@@ -96,10 +97,10 @@ public class ClientRESTClient
                 return null;
             }
         }
-        return car.ToArray();
+        return car;
     }
 
-    public async Task<Visit[]> GetClientVisits(int id)
+    public async Task<List<Visit>> GetClientVisits(int id)
     {
         var visit = new List<Visit>();
 
@@ -111,7 +112,7 @@ public class ClientRESTClient
 
             try
             {
-                VisitData[] visitData = JsonSerializer.Deserialize<VisitData[]>(resultContent, options);
+                List<VisitData> visitData = JsonSerializer.Deserialize<VisitData[]>(resultContent, options).ToList();
                 foreach (VisitData v in visitData)
                 {
                     visit.Add(DataConverter.ConvertToVisit(v));
@@ -123,10 +124,10 @@ public class ClientRESTClient
                 return null;
             }
         }
-        return visit.ToArray();
+        return visit;
     }
 
-    public async Task<Car> GetCar(int id)
+    public async Task<Car?> GetCar(int id)
     {
         Car car;
 
@@ -144,13 +145,13 @@ public class ClientRESTClient
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
-                return new Car();
+                return null;
             }
         }
         return car;
     }
 
-    public async Task<Visit> GetVisit(int id)
+    public async Task<Visit?> GetVisit(int id)
     {
         Visit visit;
 
@@ -168,7 +169,7 @@ public class ClientRESTClient
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
-                return new Visit();
+                return null;
             }
         }
         return visit;

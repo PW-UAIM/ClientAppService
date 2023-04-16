@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using majumi.CarService.ClientsAppService.Model;
 using majumi.CarService.ClientsAppService.Rest.Model.Model;
+using majumi.CarService.ClientsAppService.Rest.Model.Converters;
 
 namespace majumi.CarService.ClientsAppService.Rest.Controllers;
 
@@ -19,87 +20,80 @@ public class ClientAppController : ControllerBase
 
     [HttpGet]
     [Route("/client/{id:int}/login")]
-    public ClientLoginStatus ClientLogIn(int id)
+    public ActionResult<ClientLoginStatus> ClientLogIn(int id)
     {
-        return restClient.ClientLogIn(id).Result;
+        ClientLoginStatus clientLoginStatus = restClient.ClientLogIn(id).Result;
+        if (clientLoginStatus.IsSuccesfull == false)
+            return Unauthorized();
+
+        return Ok(clientLoginStatus);
     }
 
     [HttpPost]
     [Route("/car/add")]
-    public ActionResult AddCar(CarData data)
+    public ActionResult<CarData> AddCar(CarData data)
     {
         if (restClient.AddCar(data).Result)
-            return Created("/car/add", data);
+            return Created($"/car/{data.CarID}", data);
+
         return BadRequest();
     }
 
     [HttpPost]
     [Route("/visit/add")]
-    public ActionResult AddVisit(VisitData data)
+    public ActionResult<VisitData> AddVisit(VisitData data)
     {
         if (restClient.AddVisit(data).Result)
-            return Created("/visit/add", data);
+            return Created($"/visit/{data.VisitID}", data);
+
         return BadRequest();
     }
 
     [HttpGet]
     [Route("/car/all/{id:int}")]
-    public Car[] GetClientCars(int id)
+    public List<CarData> GetClientCars(int id)
     {
-        return restClient.GetClientCars(id).Result;
+        List<Car> cars = restClient.GetClientCars(id).Result;
+        List<CarData> carData = new();
+        foreach(Car c in cars)
+        {
+            carData.Add(DataConverter.ConvertToCarData(c));
+        }
+        return carData;
     }
 
     [HttpGet]
     [Route("/visit/all/{id:int}")]
-    public Visit[] GetClientVisits(int id)
+    public List<VisitData> GetClientVisits(int id)
     {
-        return restClient.GetClientVisits(id).Result;
+        List<Visit> visits = restClient.GetClientVisits(id).Result;
+        List<VisitData> visitData = new();
+        foreach (Visit v in visits)
+        {
+            visitData.Add(DataConverter.ConvertToVisitData(v));
+        }
+        return visitData;
     }
 
     [HttpGet]
     [Route("/car/{id:int}")]
-    public Car GetCar(int id)
+    public CarData GetCar(int id)
     {
-        return restClient.GetCar(id).Result;
+        Car car = restClient.GetCar(id).Result;
+        CarData carData = DataConverter.ConvertToCarData(car);
+
+        return carData;
     }
 
     [HttpGet]
     [Route("/visit/{id:int}")]
-    public Visit GetVisit(int id)
+    public VisitData GetVisit(int id)
     {
-        return restClient.GetVisit(id).Result;
-    }
+        Visit visit = restClient.GetVisit(id).Result;
+        VisitData visitData = DataConverter.ConvertToVisitData(visit);
 
-    /*
-    [HttpGet]
-    [Route("/clientLogIn/{id:int}")]
-    public ClientLoginStatus ClientLogIn(int id)
-    {
-        var client = restClient.ClientLogIn(id);
-        return new ClientLoginStatus(client != null, client.Result.ClientID);
+        return visitData;
     }
-
-    [HttpGet]
-    [Route("/getCar/{id:int}")]
-    public Car GetCar(int id)
-    {
-        return restClient.GetCar(id).Result;
-    }
-
-    [HttpGet]
-    [Route("/getVisit/{id:int}")]
-    public Visit GetVisit(int id)
-    {
-        return restClient.GetVisit(id).Result;
-    }
-
-    [HttpGet]
-    [Route("/getVisitsAt/{month:int}/{day:int}")]
-    public Visit[] GetVisitsAt(int month, int day)
-    {
-        return restClient.GetVisitsAt(month, day).Result;
-    }
-    */
 
     [HttpGet]
     [Route("/runTests")]
