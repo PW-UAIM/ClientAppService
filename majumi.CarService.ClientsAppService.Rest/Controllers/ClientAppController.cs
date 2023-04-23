@@ -23,7 +23,7 @@ public class ClientAppController : ControllerBase
     public async Task<ActionResult<ClientLoginStatus>> ClientLogIn(int id)
     {
         ClientLoginStatus clientLoginStatus = await restClient.ClientLogIn(id);
-        if (clientLoginStatus.IsSuccesfull == false)
+        if (!clientLoginStatus.IsSuccesfull)
             return Unauthorized();
 
         return Ok(clientLoginStatus);
@@ -33,7 +33,7 @@ public class ClientAppController : ControllerBase
     [Route("/addCar")]
     public async Task<ActionResult<bool>> AddCar(CarData data)
     {
-        if (await restClient.AddCar(data) == true)
+        if (await restClient.AddCar(data))
             return Created($"/car/{data.CarID}", true);
 
         return BadRequest();
@@ -43,7 +43,7 @@ public class ClientAppController : ControllerBase
     [Route("/addVisit")]
     public async Task<ActionResult<bool>> AddVisit(VisitData data)
     {
-        if (await restClient.AddVisit(data) == true)
+        if (await restClient.AddVisit(data))
             return Created($"/visit/{data.VisitID}", true);
 
         return BadRequest();
