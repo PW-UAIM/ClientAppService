@@ -11,11 +11,10 @@ public class ClientRESTClient
     private const string ClientDataServiceURL = "https://localhost:5001/";
     private const string CarDataServiceURL = "https://localhost:5000/";
     private const string VisitDataServiceURL = "https://localhost:5003/";
-    private JsonSerializerOptions options = new JsonSerializerOptions
+    private readonly JsonSerializerOptions options = new()
     {
         PropertyNameCaseInsensitive = true,
         WriteIndented = true,
-        
     };
 
     public ClientRESTClient() { }
@@ -27,7 +26,7 @@ public class ClientRESTClient
             httpClient.BaseAddress = new Uri(CarDataServiceURL);
             var json = JsonSerializer.Serialize(data);
             var body = new StringContent(json, Encoding.UTF8, "application/json");
-            var result = await httpClient.PostAsync("car/add", body);
+            var result = await httpClient.PostAsync("addCar", body);
             if (result.StatusCode.Equals(System.Net.HttpStatusCode.Created))
                 return true;
         }
@@ -41,7 +40,7 @@ public class ClientRESTClient
             httpClient.BaseAddress = new Uri(VisitDataServiceURL);
             var json = JsonSerializer.Serialize(data);
             var body = new StringContent(json, Encoding.UTF8, "application/json");
-            var result = await httpClient.PostAsync("visit/add", body);
+            var result = await httpClient.PostAsync("addVisit", body);
             if (result.StatusCode.Equals(System.Net.HttpStatusCode.Created))
                 return true;
         }
@@ -55,13 +54,15 @@ public class ClientRESTClient
         using (var httpClient = new HttpClient())
         {
             httpClient.BaseAddress = new Uri(ClientDataServiceURL);
-            var result = await httpClient.GetAsync($"client/{id}");
+            var result = await httpClient.GetAsync($"getClient/{id}");
             string resultContent = await result.Content.ReadAsStringAsync();
             if(!result.StatusCode.Equals(System.Net.HttpStatusCode.OK))
                 return new ClientLoginStatus(false, null);
             try
             {
                 client = JsonSerializer.Deserialize<Client>(resultContent, options);
+                ClientData clientData = DataConverter.ConvertToClientData(client);
+                return new ClientLoginStatus(true, clientData);
             }
             catch (Exception e)
             {
@@ -69,26 +70,24 @@ public class ClientRESTClient
                 return new ClientLoginStatus(false, null);
             }
         }
-        ClientData clientData = DataConverter.ConvertToClientData(client);
-        return new ClientLoginStatus(true, clientData);
     }
 
     public async Task<List<Car>> GetClientCars(int id)
     {
-        var car = new List<Car>();
+        var carResult = new List<Car>();
 
         using (var httpClient = new HttpClient())
         {
             httpClient.BaseAddress = new Uri(CarDataServiceURL);
-            var result = await httpClient.GetAsync($"car/all/client/{id}");
+            var result = await httpClient.GetAsync($"getAllCarsByClient/{id}");
             string resultContent = await result.Content.ReadAsStringAsync();
 
             try
             {
                 List<CarData> carData = JsonSerializer.Deserialize<CarData[]>(resultContent, options).ToList();
-                foreach (CarData c in carData)
+                foreach (CarData car in carData)
                 {
-                    car.Add(DataConverter.ConvertToCar(c));
+                    carResult.Add(DataConverter.ConvertToCar(car));
                 }
             }
             catch (Exception e)
@@ -97,25 +96,25 @@ public class ClientRESTClient
                 return null;
             }
         }
-        return car;
+        return carResult;
     }
 
     public async Task<List<Visit>> GetClientVisits(int id)
     {
-        var visit = new List<Visit>();
+        var visitResult = new List<Visit>();
 
         using (var httpClient = new HttpClient())
         {
             httpClient.BaseAddress = new Uri(VisitDataServiceURL);
-            var result = await httpClient.GetAsync($"visit/client/{id}");
+            var result = await httpClient.GetAsync($"getAllVisitsByClient/{id}");
             string resultContent = await result.Content.ReadAsStringAsync();
 
             try
             {
                 List<VisitData> visitData = JsonSerializer.Deserialize<VisitData[]>(resultContent, options).ToList();
-                foreach (VisitData v in visitData)
+                foreach (VisitData visit in visitData)
                 {
-                    visit.Add(DataConverter.ConvertToVisit(v));
+                    visitResult.Add(DataConverter.ConvertToVisit(visit));
                 }
             }
             catch (Exception e)
@@ -124,23 +123,23 @@ public class ClientRESTClient
                 return null;
             }
         }
-        return visit;
+        return visitResult;
     }
 
     public async Task<Car?> GetCar(int id)
     {
-        Car car;
+        Car carResult;
 
         using (var httpClient = new HttpClient())
         {
             httpClient.BaseAddress = new Uri(CarDataServiceURL);
-            var result = await httpClient.GetAsync($"car/{id}");
+            var result = await httpClient.GetAsync($"getCar/{id}");
             string resultContent = await result.Content.ReadAsStringAsync();
             Console.WriteLine(resultContent);
             try
             {
-                CarData c = JsonSerializer.Deserialize<CarData>(resultContent, options);
-                car = DataConverter.ConvertToCar(c);
+                CarData car = JsonSerializer.Deserialize<CarData>(resultContent, options);
+                carResult = DataConverter.ConvertToCar(car);
             }
             catch (Exception e)
             {
@@ -148,23 +147,23 @@ public class ClientRESTClient
                 return null;
             }
         }
-        return car;
+        return carResult;
     }
 
     public async Task<Visit?> GetVisit(int id)
     {
-        Visit visit;
+        Visit visitResult;
 
         using (var httpClient = new HttpClient())
         {
             httpClient.BaseAddress = new Uri(VisitDataServiceURL);
-            var result = await httpClient.GetAsync($"visit/{id}");
+            var result = await httpClient.GetAsync($"getVisit/{id}");
             string resultContent = await result.Content.ReadAsStringAsync();
 
             try
             {
-                VisitData v = JsonSerializer.Deserialize<VisitData>(resultContent, options);
-                visit = DataConverter.ConvertToVisit(v);
+                VisitData visit = JsonSerializer.Deserialize<VisitData>(resultContent, options);
+                visitResult = DataConverter.ConvertToVisit(visit);
             }
             catch (Exception e)
             {
@@ -172,6 +171,6 @@ public class ClientRESTClient
                 return null;
             }
         }
-        return visit;
+        return visitResult;
     }
 }

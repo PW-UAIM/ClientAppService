@@ -19,10 +19,10 @@ public class ClientAppController : ControllerBase
     }
 
     [HttpGet]
-    [Route("/client/{id:int}/login")]
-    public ActionResult<ClientLoginStatus> ClientLogIn(int id)
+    [Route("/login/{id:int}")]
+    public async Task<ActionResult<ClientLoginStatus>> ClientLogIn(int id)
     {
-        ClientLoginStatus clientLoginStatus = restClient.ClientLogIn(id).Result;
+        ClientLoginStatus clientLoginStatus = await restClient.ClientLogIn(id);
         if (clientLoginStatus.IsSuccesfull == false)
             return Unauthorized();
 
@@ -30,66 +30,66 @@ public class ClientAppController : ControllerBase
     }
 
     [HttpPost]
-    [Route("/car/add")]
-    public ActionResult<bool> AddCar(CarData data)
+    [Route("/addCar")]
+    public async Task<ActionResult<bool>> AddCar(CarData data)
     {
-        if (restClient.AddCar(data).Result)
+        if (await restClient.AddCar(data) == true)
             return Created($"/car/{data.CarID}", true);
 
         return BadRequest();
     }
 
     [HttpPost]
-    [Route("/visit/add")]
-    public ActionResult<bool> AddVisit(VisitData data)
+    [Route("/addVisit")]
+    public async Task<ActionResult<bool>> AddVisit(VisitData data)
     {
-        if (restClient.AddVisit(data).Result)
+        if (await restClient.AddVisit(data) == true)
             return Created($"/visit/{data.VisitID}", true);
 
         return BadRequest();
     }
 
     [HttpGet]
-    [Route("/car/client/{id:int}")]
-    public List<CarData> GetClientCars(int id)
+    [Route("/getAllCarsByClient/{id:int}")]
+    public async Task<List<CarData>> GetClientCars(int id)
     {
-        List<Car> cars = restClient.GetClientCars(id).Result;
+        List<Car> cars = await restClient.GetClientCars(id);
         List<CarData> carData = new();
-        foreach(Car c in cars)
+        foreach(Car car in cars)
         {
-            carData.Add(DataConverter.ConvertToCarData(c));
+            carData.Add(DataConverter.ConvertToCarData(car));
         }
         return carData;
     }
 
     [HttpGet]
-    [Route("/visit/client/{id:int}")]
-    public List<VisitData> GetClientVisits(int id)
+    [Route("/getAllVisitsByClient/{id:int}")]
+    public async Task<List<VisitData>> GetClientVisits(int id)
     {
-        List<Visit> visits = restClient.GetClientVisits(id).Result;
+        List<Visit> visits = await restClient.GetClientVisits(id);
         List<VisitData> visitData = new();
-        foreach (Visit v in visits)
+        foreach (Visit visit in visits)
         {
-            visitData.Add(DataConverter.ConvertToVisitData(v));
+            visitData.Add(DataConverter.ConvertToVisitData(visit));
         }
         return visitData;
     }
 
     [HttpGet]
-    [Route("/car/{id:int}")]
-    public CarData GetCar(int id)
+    [Route("/getCar/{id:int}")]
+    public async Task<CarData> GetCar(int id)
     {
-        Car car = restClient.GetCar(id).Result;
+        Car car = await restClient.GetCar(id);
         CarData carData = DataConverter.ConvertToCarData(car);
 
         return carData;
     }
 
     [HttpGet]
-    [Route("/visit/{id:int}")]
-    public VisitData GetVisit(int id)
+    [Route("/getVisit/{id:int}")]
+    public async Task<VisitData> GetVisit(int id)
     {
-        Visit visit = restClient.GetVisit(id).Result;
+        Visit visit = await restClient.GetVisit(id);
         VisitData visitData = DataConverter.ConvertToVisitData(visit);
 
         return visitData;
