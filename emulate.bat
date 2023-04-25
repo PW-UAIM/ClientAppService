@@ -2,12 +2,12 @@ echo off
 set url=https://localhost:5010
 
 echo "Klient loguje sie swoim identyfikatorem"
-CALL:curl_test  GET /client/1/login
+CALL:curl_test  GET /login/1
 echo "Na stronie swojego profilu widzi auta" 
-CALL:curl_test GET /car/client/1
+CALL:curl_test GET /getAllCarsByClient/1
 echo "Moze na nim dodac nowe auto"
-echo Testowany url: https://localhost:5010/car/add
-curl -X POST https://localhost:5010/car/add -H "Content-Type: application/json" -d ^
+echo Testowany url: https://localhost:5010/addCar
+curl -X POST https://localhost:5010/addCar -H "Content-Type: application/json" -d ^
 "{^
 	\"CarID\": 12,^
 	\"Make\": \"Renault\",^
@@ -22,10 +22,10 @@ curl -X POST https://localhost:5010/car/add -H "Content-Type: application/json" 
 echo:
 echo:
 echo "Na panelu widzi takze swoje wizyty" 
-CALL:curl_test GET /visit/client/1
+CALL:curl_test GET /getAllVisitsByClient/1
 echo "Moze tez sie zapisac na wizyte"
-echo Testowany url: https://localhost:5010/visit/add
-curl -X POST https://localhost:5010/visit/add -H "Content-Type: application/json" -d ^
+echo Testowany url: https://localhost:5010/addVisit
+curl -X POST https://localhost:5010/addVisit -H "Content-Type: application/json" -d ^
 "{^
   \"visitID\": 12,^
   \"clientID\": 1,^
@@ -40,8 +40,8 @@ curl -X POST https://localhost:5010/visit/add -H "Content-Type: application/json
 echo:
 echo:
 echo "Oraz sprawdzic czy wszystkie dane sie zapisaly"
-CALL:curl_test GET /car/client/1
-CALL:curl_test GET /visit/client/1
+CALL:curl_test GET /getAllCarsByClient/1
+CALL:curl_test GET /getAllVisitsByClient/1
 
 EXIT /B 0
 

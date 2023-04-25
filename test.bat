@@ -1,13 +1,13 @@
 echo off
 set url=https://localhost:5010
 
-CALL:curl_test "Poprawne logowanie" GET /client/1/login
+CALL:curl_test "Poprawne logowanie" GET /login/1
 
-CALL:curl_test "Niepoprawne logowanie" GET /client/2000/login
+CALL:curl_test "Niepoprawne logowanie" GET /login/2000
 
 echo Nazwa testu: "Dodaj samochod"
-echo Testowany url: https://localhost:5010/car/add
-curl -X POST https://localhost:5010/car/add -H "Content-Type: application/json" -d ^
+echo Testowany url: https://localhost:5010/addCar
+curl -X POST https://localhost:5010/addCar -H "Content-Type: application/json" -d ^
 "{^
 	\"CarID\": -1,^
 	\"Make\": \"Renault\",^
@@ -23,8 +23,8 @@ echo:
 echo:
 
 echo Nazwa testu: "Dodawanie wizyty"
-echo Testowany url: https://localhost:5010/visit/add
-curl -X POST https://localhost:5010/visit/add -H "Content-Type: application/json" -d ^
+echo Testowany url: https://localhost:5010/addVisit
+curl -X POST https://localhost:5010/addVisit -H "Content-Type: application/json" -d ^
 "{^
 	\"visitID\": -1,^
   	\"clientID\": 1,^
@@ -39,13 +39,13 @@ curl -X POST https://localhost:5010/visit/add -H "Content-Type: application/json
 
 echo:
 echo:
-CALL:curl_test "Wszystkie samochody klienta o ID = 1" GET /car/client/1
+CALL:curl_test "Wszystkie samochody klienta o ID = 1" GET /getAllCarsByClient/1
 
-CALL:curl_test "Wszystkie wizyty klienta o ID = 1" GET /visit/client/1
+CALL:curl_test "Wszystkie wizyty klienta o ID = 1" GET /getAllVisitsByClient/1
 
-CALL:curl_test "Wizyta o ID 1" GET /visit/1
+CALL:curl_test "Wizyta o ID 1" GET /getVisit/1
 
-CALL:curl_test "Samochod o ID 1" GET /car/1
+CALL:curl_test "Samochod o ID 1" GET /getCar/1
 
 EXIT /B 0
 
