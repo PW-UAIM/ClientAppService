@@ -1,0 +1,26 @@
+stages:
+    - build
+    - test
+
+build:
+    stage: build
+    before_script:
+      - cd majumi.CarService.ClientsAppService.Rest
+    script:
+      - dotnet restore
+      - dotnet build -c Debug
+      - dotnet build -c Release
+    tags:
+      - all, integration
+
+test:
+    stage: test
+    before_script:
+      - cd majumi.CarService.ClientsAppService.Rest.Tests
+    script:
+      - dotnet restore
+      - dotnet build -c Debug
+      - dotnet build -c Release
+      - dotnet test
+    tags:
+      - all, integration

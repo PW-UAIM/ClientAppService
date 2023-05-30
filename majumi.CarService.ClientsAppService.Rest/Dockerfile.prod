@@ -1,0 +1,20 @@
+﻿#See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.
+
+#Depending on the operating system of the host machines(s) that will build or run the containers, the image specified in the FROM statement may need to be changed.
+#For more information, please see https://aka.ms/containercompat
+
+FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
+LABEL stage=zsutpwpatterns-webapplication_build
+WORKDIR /src
+COPY . .
+WORKDIR "/src/majumi.CarService.ClientsAppService.Rest"
+RUN dotnet restore
+RUN dotnet build -c Production -o /app/build
+RUN dotnet publish -c Production -o /app/publish
+
+FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS runtime
+WORKDIR /app
+EXPOSE 80
+EXPOSE 443
+COPY --from=build /app/publish .
+ENTRYPOINT ["dotnet", "majumi.CarService.ClientsAppService.Rest.dll"]

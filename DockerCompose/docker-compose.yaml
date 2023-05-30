@@ -1,0 +1,17 @@
+version: "3.9"
+
+networks:
+  int_network:
+
+services:
+  controlsvc:
+    image: atomaszewski/application:zsutpwpatterns-webapplication
+    ports:
+      - published: 5000
+        target: 80
+      - published: 5001
+        target: 443
+    networks:
+      - int_network
+    deploy:
+      replicas: 1
