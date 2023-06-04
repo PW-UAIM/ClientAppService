@@ -5,12 +5,10 @@ networks:
 
 services:
   controlsvc:
-    image: atomaszewski/application:zsutpwpatterns-webapplication
+    image: majumi/clientappservice:appservice
     ports:
-      - published: 5000
-        target: 80
-      - published: 5001
-        target: 443
+      - published: 5010
+        target: 5010
     networks:
       - int_network
     deploy:
