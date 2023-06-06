@@ -17,6 +17,35 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Elementy rozwiązania", "El
 		test.bat = test.bat
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Kubernetes", "Kubernetes", "{EEA4457A-CCF2-4739-BD5B-0E69FB32E736}"
+	ProjectSection(SolutionItems) = preProject
+		Kubernetes\dashboard_sa_secret.yaml = Kubernetes\dashboard_sa_secret.yaml
+		Kubernetes\dashboard_sa_token.txt = Kubernetes\dashboard_sa_token.txt
+		Kubernetes\kubectl.yaml = Kubernetes\kubectl.yaml
+		Kubernetes\Kubernetes_InstallDashboard.bat = Kubernetes\Kubernetes_InstallDashboard.bat
+		Kubernetes\Kubernetes_RegisterDockerSecret.bat = Kubernetes\Kubernetes_RegisterDockerSecret.bat
+		Kubernetes\Kubernetes_ShowCluster.bat = Kubernetes\Kubernetes_ShowCluster.bat
+		Kubernetes\Kubernetes_ShowSystem.bat = Kubernetes\Kubernetes_ShowSystem.bat
+		Kubernetes\Kubernetes_StartDashboard.url = Kubernetes\Kubernetes_StartDashboard.url
+		Kubernetes\Kubernetes_StartDashboardProxy.bat = Kubernetes\Kubernetes_StartDashboardProxy.bat
+		Kubernetes\Kubernetes_StartSystem.bat = Kubernetes\Kubernetes_StartSystem.bat
+		Kubernetes\Kubernetes_StopSystem.bat = Kubernetes\Kubernetes_StopSystem.bat
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docker", "Docker", "{513F5E94-6C4B-4917-BF5B-0F210AAABE63}"
+	ProjectSection(SolutionItems) = preProject
+		Docker\BuildPushImage.bat = Docker\BuildPushImage.bat
+		Docker\RunImage.bat = Docker\RunImage.bat
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DockerCompose", "DockerCompose", "{A33CC5A0-78C5-4AD3-80EB-CF3B1DE91E3A}"
+	ProjectSection(SolutionItems) = preProject
+		DockerCompose\docker-compose.yaml = DockerCompose\docker-compose.yaml
+		DockerCompose\Docker_ShowSystem.bat = DockerCompose\Docker_ShowSystem.bat
+		DockerCompose\Docker_StartSystem.bat = DockerCompose\Docker_StartSystem.bat
+		DockerCompose\Docker_StopSystem.bat = DockerCompose\Docker_StopSystem.bat
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
