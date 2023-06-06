@@ -8,16 +8,24 @@ namespace majumi.CarService.ClientsAppService.Rest;
 
 public class ClientRESTClient
 {
-    private const string ClientDataServiceURL = "https://localhost:5001/";
-    private const string CarDataServiceURL = "https://localhost:5000/";
-    private const string VisitDataServiceURL = "https://localhost:5003/";
+    private string ClientDataServiceURL = "http://localhost:5001/";
+    private string CarDataServiceURL = "http://localhost:5000/";
+    private string VisitDataServiceURL = "http://localhost:5003/";
+
     private readonly JsonSerializerOptions options = new()
     {
         PropertyNameCaseInsensitive = true,
         WriteIndented = true,
     };
 
-    public ClientRESTClient() { }
+    public ClientRESTClient() { 
+        if (System.Environment.GetEnvironmentVariable("DOTNET_RUNNING_IN_CONTAINER") == "true")
+        {
+            CarDataServiceURL = "http://carsdataservice:5000/";
+            ClientDataServiceURL = "http://clientsdataservice:5001/";
+            VisitDataServiceURL = "http://visitsdataservice:5003/";
+        }
+    }
 
     public async Task<bool> AddCar(CarData data)
     {
