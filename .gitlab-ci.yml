@@ -37,7 +37,7 @@ build_image:
     before_script:
       - cd Docker
     script:
-      - BuildImage.bat
+      - ./BuildImage.bat
     tags:
       - docker
 
@@ -47,6 +47,6 @@ push_image:
     before_script:
       - cd Docker
     script:
-      - PushImage.bat
+      - ./PushImage.bat
     tags:
       - docker
