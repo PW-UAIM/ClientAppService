@@ -46,6 +46,9 @@ public class ClientRESTClient
         using (var httpClient = new HttpClient())
         {
             httpClient.BaseAddress = new Uri(VisitDataServiceURL);
+            data.MechanicID = -1;
+            data.ServiceCost = -1;
+            data.ServiceStatus = "PENDING";
             var json = JsonSerializer.Serialize(data);
             var body = new StringContent(json, Encoding.UTF8, "application/json");
             var result = await httpClient.PostAsync("addVisit", body);
