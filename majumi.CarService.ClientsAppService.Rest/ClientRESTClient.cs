@@ -19,7 +19,13 @@ public class ClientRESTClient
     };
 
     public ClientRESTClient() { 
-        if (System.Environment.GetEnvironmentVariable("DOTNET_RUNNING_IN_CONTAINER") == "true")
+        if(!String.IsNullOrEmpty(Environment.GetEnvironmentVariable("CARSDATASERVICE_SERVICE_HOST"))) 
+        {
+            CarDataServiceURL = $"http://{Environment.GetEnvironmentVariable("CARSDATASERVICE_SERVICE_HOST")}:{int.Parse(Environment.GetEnvironmentVariable("CARSDATASERVICE_SERVICE_PORT"))}/";
+            ClientDataServiceURL = $"http://{Environment.GetEnvironmentVariable("CLIENTSDATASERVICE_SERVICE_HOST")}:{int.Parse(Environment.GetEnvironmentVariable("CLIENTSDATASERVICE_SERVICE_PORT"))}/";
+            VisitDataServiceURL = $"http://{Environment.GetEnvironmentVariable("VISITSDATASERVICE_SERVICE_HOST")}:{int.Parse(Environment.GetEnvironmentVariable("VISITSDATASERVICE_SERVICE_PORT"))}/";
+        }   
+        else if (System.Environment.GetEnvironmentVariable("DOTNET_RUNNING_IN_CONTAINER") == "true")
         {
             CarDataServiceURL = "http://carsdataservice:5000/";
             ClientDataServiceURL = "http://clientsdataservice:5001/";
